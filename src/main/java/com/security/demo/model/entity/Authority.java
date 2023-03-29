@@ -5,13 +5,12 @@ import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class Authority extends AbstractPersistable<Long> {
+public class Authority extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String permission;
