@@ -16,5 +16,6 @@ public interface UserCreateMapper extends EntityMapper<User, UserCreateRequest> 
     @Mapping(target = "lastModifiedDate", ignore = true)
     @Mapping(target = "role", ignore = true)
     @Mapping(target = "isEnabled", ignore = true)
+    @Mapping(target = "authorities", ignore = true)
     User toEntity(UserCreateRequest request);
 }

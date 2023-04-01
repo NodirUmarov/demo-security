@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 public record UserDto(Long id,
                       String username,
-                      String password,
+                      @JsonIgnore String password,
                       String firstName,
                       String lastName,
                       LocalDate dob,

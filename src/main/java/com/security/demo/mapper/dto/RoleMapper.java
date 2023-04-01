@@ -6,6 +6,6 @@ import com.security.demo.model.dto.RoleDto;
 import com.security.demo.model.entity.Role;
 import org.mapstruct.Mapper;
 
-@Mapper(config = MapstructAutoWire.class, uses = {AuthorityMapper.class})
+@Mapper(config = MapstructAutoWire.class, uses = {PermissionMapper.class})
 public interface RoleMapper extends DtoMapper<RoleDto, Role> {
 }

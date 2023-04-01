@@ -10,7 +10,7 @@ import java.util.List;
  */
 public record RoleDto(Long id,
                       String name,
-                      List<AuthorityDto> authorities,
+                      List<PermissionDto> authorities,
                       LocalDateTime createdDate,
                       LocalDateTime lastModifiedDate) implements Serializable {
 }

@@ -15,5 +15,6 @@ public interface UserUpdateMapper extends EntityMapper<User, UserUpdateRequest> 
     @Mapping(target = "lastModifiedDate", ignore = true)
     @Mapping(target = "role", ignore = true)
     @Mapping(target = "isEnabled", ignore = true)
+    @Mapping(target = "authorities", ignore = true)
     User toEntity(UserUpdateRequest dto);
 }

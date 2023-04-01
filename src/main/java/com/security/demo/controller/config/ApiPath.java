@@ -7,7 +7,7 @@ public final class ApiPath {
 
     private static final String API_VERSION = "/api/v1";
 
-    public static final String AUTHORITY_PATH = API_VERSION + "/authorities";
+    public static final String AUTHORITY_PATH = API_VERSION + "/permissions";
     public static final String USER_PATH = API_VERSION + "/users";
     public static final String ROLE_PATH = API_VERSION + "/roles";
 

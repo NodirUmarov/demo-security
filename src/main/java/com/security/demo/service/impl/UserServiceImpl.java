@@ -21,6 +21,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -133,5 +135,17 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new EntityNotFoundException("User by id=" + id + " not found"));
         userRepository.deleteById(id);
         return userMapper.toDto(user);
+    }
+
+    @Override
+    public UserDto getOneByUsername(String name) {
+        return userMapper.toDto(userRepository.findByUsername(name)
+                .orElseThrow(() -> new UsernameNotFoundException("For username='" + name + "'")));
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("For username='" + username + "'"));
     }
 }

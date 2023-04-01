@@ -4,8 +4,9 @@ import com.security.demo.model.dto.UserDto;
 import com.security.demo.model.request.UserCreateRequest;
 import com.security.demo.model.request.UserUpdateRequest;
 import java.util.List;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
-public interface UserService {
+public interface UserService extends UserDetailsService {
 
     UserDto create(UserCreateRequest request);
     UserDto getOne(Long id);
@@ -20,4 +21,6 @@ public interface UserService {
     UserDto deleteOne(String username);
 
     UserDto entirelyDelete(Long id);
+
+    UserDto getOneByUsername(String name);
 }

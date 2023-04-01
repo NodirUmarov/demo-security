@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,32 +31,33 @@ public class UserController {
 
     private final UserService userService;
 
-    // TODO: 3/14/2023 Validation
-    // TODO: 3/14/2023 .env file implement
-    // TODO: 3/19/2023 UPDATE(PATCH, PUT) and DELETE
     @PostMapping
     public ResponseEntity<UserDto> create(@RequestBody @Valid UserCreateRequest request) {
         return ResponseEntity.status(HttpStatus.CREATED).body(userService.create(request));
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAuthority('MODERATOR_READ')")
     public UserDto getOne(@PathVariable Long id) {
         return userService.getOne(id);
     }
 
     @GetMapping(params = {"roleName"})
+    @PreAuthorize("hasAuthority('MODERATOR_READ')")
     public List<UserDto> getAllByRole(@RequestParam String roleName,
                                       @RequestParam(defaultValue = "0") @Validated @PositiveOrZero Integer pageNumber,
                                       @RequestParam(defaultValue = "10") @Validated @Length(min = 1, max = 25) Integer pageSize) {
         return userService.getAllByRole(roleName, pageNumber, pageSize);
     }
 
-    @GetMapping
-    public Integer getPageCount(@RequestParam(defaultValue = "10") Integer size) {
+    @GetMapping(params = {"size"})
+    @PreAuthorize("hasAuthority('USER_READ')")
+    public Integer getPageCount(@RequestParam Integer size) {
         return userService.getPageCount(size);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAuthority('MODERATOR_READ')")
     public ResponseEntity<UserDto> updateOne(@RequestBody UserUpdateRequest request,
                                               @PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.updateOne(request, id));
@@ -74,4 +77,11 @@ public class UserController {
     public ResponseEntity<UserDto> entirelyDelete(@PathVariable Long id) {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(userService.entirelyDelete(id));
     }
+
+    @GetMapping
+    @PreAuthorize("hasAuthority('USER_READ')")
+    public UserDto getMe(Authentication authentication) {
+        return userService.getOneByUsername(authentication.getName());
+    }
+
 }
